@@ -1,0 +1,20 @@
+<table class="table">
+	<caption style="color:blue;"><b>Roles</b></caption>
+	<thead>
+		<tr class="info">
+			<th>#</th>
+			<th>Id</th>
+			<th>Name</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr ng-repeat="role in ctrl.roles">
+			<td>{{$index + 1}}</td>
+			<td>{{role.role_id}}</td>
+			<td>{{role.role_name}}</td>
+			<td><span><a class="cursor-pointer" ng-click="ctrl.updateRole(role.role_id)"> Update</a></span></td>
+		</tr>
+	</tbody>
+</table>

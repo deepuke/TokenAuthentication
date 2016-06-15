@@ -1,0 +1,16 @@
+<ul class="nav navbar-nav navbar-right">
+    <li ui-sref-active="active" ng-show="ctrl.isAuthenticated()">
+        <a ui-sref="main">Home</a></li>
+    <li ui-sref-active="active">
+        <a ui-sref="register"></span> Register</a>
+    </li>
+    <li ui-sref-active="active" ng-hide="ctrl.isAuthenticated()">
+        <a ui-sref="login"></span> Login</a>
+    </li>
+    <li ui-sref-active="active" ng-show="ctrl.isAuthenticated()">
+        <a ui-sref="logout"></span> Log out</a>
+    </li>
+    <li ui-sref-active="active" ng-show="ctrl.isAuthenticated()">
+        <a ui-sref="admin.config"></span>Admin</a>
+    </li>
+</ul>

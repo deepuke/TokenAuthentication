@@ -1,0 +1,8 @@
+{
+    "apps" : [
+        {"id":"app-001", "name":"Admin App", "level":"1"},
+        {"id":"app-002", "name":"Solr App", "level":"2"},
+        {"id":"app-003", "name":"xyz App", "level":"3"},
+        {"id":"app-004", "name":"qwe App", "level":"4"}
+    ]
+}

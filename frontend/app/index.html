@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/bootstrap-cerulean.css" />
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+</head>
+
+<body ng-app="angularNodeTokenAuthApp">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div class="container" ng-clock>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">N4MATIVE</a>
+                </div>
+                <div id="navbar"> <!--class="navbar-collapse collapse"-->
+                    <menu/>
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </nav>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div ui-view></div>
+            </div>
+        </div>
+
+        <div class="alert alert-{{alert.type}} animated main-alert" ng-class="{'flipInY':alert.show, 'flipOutY':!alert.show, 'alert-hidden':!alert.hasBeenShown}">
+            <strong>{{alert.title}}</strong> {{alert.message}}
+        </div>
+
+        <div class="footer">
+
+        </div>
+    </div>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <script>
+        ! function (A, n, g, u, l, a, r) {
+            A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {
+                    (A[l].q = A[l].q || []).push(arguments)
+                }, A[l].l = +new Date, a = n.createElement(g),
+                r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)
+        }(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-XXXXX-X');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/satellizer/satellizer.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/app.config.js"></script>
+
+    <!-- common services starts-->
+    <script src="scripts/services/validateEquals.js"></script>
+    <script src="scripts/services/alert.js"></script>
+    <script src="scripts/services/auth.js"></script>
+    <script src="scripts/services/authinterceptor.js"></script>
+    <script src="scripts/services/authToken.js"></script>
+
+    <!-- main module starts-->
+    <script src="scripts/modules/main/main.ctrl.js"></script>
+
+
+
+    <!-- users module starts-->
+    <script src="scripts/modules/users/userApi.services.js"></script>
+    <script src="scripts/modules/users/register.ctrl.js"></script>
+    <script src="scripts/modules/users/login.ctrl.js"></script>
+    <script src="scripts/modules/users/logout.ctrl.js"></script>
+
+    <!-- admin module starts-->
+    <script src="scripts/modules/admin/admin.js"></script>
+    <!-- admin.userlist module starts-->
+    <script src="scripts/modules/shared/userlist/userList.directive.js"></script>
+    <script src="scripts/modules/shared/userlist/userList.ctrl.js"></script>
+    <script src="scripts/modules/shared/userlist/updateUser.ctrl.js"></script>
+    <script src="scripts/modules/shared/userlist/userList.service.js"></script>
+
+    <!-- admin.applist module starts-->
+    <script src="scripts/modules/shared/applist/appList.directive.js"></script>
+    <script src="scripts/modules/shared/applist/appList.ctrl.js"></script>
+    <script src="scripts/modules/shared/applist/appDetails.ctrl.js"></script>
+    <script src="scripts/modules/shared/applist/appList.service.js"></script>
+    <!-- admin module ends-->
+
+    <!-- menu module starts-->
+    <script src="scripts/modules/shared/menu/menu.directive.js"></script>
+    <script src="scripts/modules/shared/menu/menu.ctrl.js"></script>
+    <script src="scripts/modules/shared/menu/menu.service.js"></script>
+
+    <!-- menu module starts-->
+    <script src="scripts/modules/shared/modalPopup/modalPopup.directive.js"></script>
+    <script src="scripts/modules/shared/modalPopup/modalPopup.ctrl.js"></script>
+    <script src="scripts/modules/shared/modalPopup/modalPopup.service.js"></script>
+
+    <!-- updateRole module starts-->
+    <script src="scripts/modules/shared/rolesList/rolesList.directive.js"></script>
+    <script src="scripts/modules/shared/rolesList/rolesList.ctrl.js"></script>
+    <script src="scripts/modules/shared/rolesList/rolesList.service.js"></script>
+
+    <!-- updateRole module starts-->
+    <script src="scripts/modules/shared/updateRole/updateRole.directive.js"></script>
+    <script src="scripts/modules/shared/updateRole/updateRole.ctrl.js"></script>
+    <script src="scripts/modules/shared/updateRole/updateRole.service.js"></script>
+
+    <!-- applications module starts-->
+    <script src="scripts/modules/applications/applications.ctrl.js"></script>
+    <script src="scripts/modules/applications/applications.services.js"></script>
+
+    <!-- applications module starts-->
+    <script src="scripts/modules/roles/roles.ctrl.js"></script>
+    <script src="scripts/modules/roles/roles.services.js"></script>
+
+
+    <!-- endbuild -->
+</body>
+
+</html>
