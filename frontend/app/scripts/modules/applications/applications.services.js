@@ -29,9 +29,9 @@
             return deferred.promise;
         }
 
-        function getAllApps(){
+        function getAllApps(user){
             var deferred = $q.defer();
-            $http.get(API_URL +'getAllApps/').success(function(response) {
+            $http.post(API_URL +'getAllApps/', user).success(function(response) {
                 deferred.resolve(response);
             }).error(function(error) {
                 deferred.reject(error);

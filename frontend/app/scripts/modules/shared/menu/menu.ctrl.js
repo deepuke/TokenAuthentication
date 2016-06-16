@@ -9,6 +9,7 @@
     function menuController($scope, $log, $rootScope, alert, $http, $state, $cookieStore, authToken) {
         var _self = this;
         _self.isAuthenticated = authToken.isAuthenticated;
+        _self.isAdmin = authToken.isAdmin;
     }
 
 })();

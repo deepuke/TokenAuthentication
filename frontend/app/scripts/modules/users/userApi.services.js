@@ -22,7 +22,8 @@
             getAllUsers : getAllUsers,
             updateUser :updateUser,
             getuserByEmail : getuserByEmail
-        };
+        };        
+       
 
         function updateUser(user){
             var deferred = $q.defer();
@@ -38,7 +39,7 @@
             var deferred = $q.defer();
             $http.post(API_URL +'getusers/', user).success(function(response) {
 
-                deferred.resolve(response)
+                deferred.resolve(response);
 
             }).error(function(error) {
                 deferred.reject(error);
@@ -52,7 +53,7 @@
             var deferred = $q.defer();
             $http.post(API_URL +'getuserByEmail/', user).success(function(response) {
 
-                deferred.resolve(response)
+                deferred.resolve(response);
 
             }).error(function(error) {
                 deferred.reject(error);
@@ -66,7 +67,7 @@
             var deferred = $q.defer();
             $http.get(API_URL +'getusers/').success(function(response) {
 
-                deferred.resolve(response)
+                deferred.resolve(response);
 
             }).error(function(error) {
                 deferred.reject(error);
@@ -91,8 +92,7 @@
          function login(user){
             var deferred = $q.defer();
             $http.post(API_URL+'login/', user).success(function(response) {
-
-                deferred.resolve(response)
+                deferred.resolve(response);
 
             }).error(function(error) {
                 deferred.reject(error);

@@ -96,8 +96,10 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 	router.post("/login", function(req, res) {
 		var user = req.body;
 		user.password = md5(user.password);
-		console.log(user);
-		var query = 'SELECT email_id  FROM n4msaas.user where email_id = "' + user.email_id + '" and  password="' + user.password + '"';
+		var query = 'SELECT user_role.email_id, user_role.role_id FROM user_role WHERE user_role.email_id IN';
+		query += '( SELECT user.email_id FROM user WHERE email_id = "' + user.email_id + '" and  password="' + user.password + '")';
+		
+		console.log(query);
 		var table = ["user"];
 		query = mysql.format(query, table);
 		connection.query(query, function(err, rows) {
@@ -108,8 +110,8 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 					"Message" : "Error executing MySQL query"
 				});
 			} else {
-				console.log(rows);
-				createSendToken(user, res);
+				console.log(rows[0]);				
+				createSendToken(rows[0], res);
 			}
 		});
 	});

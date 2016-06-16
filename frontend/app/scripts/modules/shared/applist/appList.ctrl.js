@@ -4,9 +4,9 @@
     angular
         .module('angularNodeTokenAuthApp')
         .controller('appListCtrl', appListController);
-    appListController.$inject = ['$scope', '$log', '$rootScope', 'alert', '$http', '$state', 'applicationApiServices'];
+    appListController.$inject = ['$scope', '$log', '$rootScope', 'alert', '$http', '$state', 'applicationApiServices', 'authToken'];
 
-    function appListController($scope, $log, $rootScope, alert, $http, $state, applicationApiServices) {
+    function appListController($scope, $log, $rootScope, alert, $http, $state, applicationApiServices, authToken) {
         var _self = this;
 
         this.apps = [];
@@ -16,15 +16,16 @@
         init();
 
         function init() {
-            getAllApps();
+        	var loggedUser = authToken.getLoggedUser();
+            getAllApps(loggedUser);
         }
 
-        function getAllApps() {
-            applicationApiServices.getAllApps().then(function(response) {
+        function getAllApps(user) {        	
+            applicationApiServices.getAllApps(user).then(function(response) {
                 _self.apps = response.apps;
             }).catch(function(error) {
                 alert('warning', 'Oops!', 'Couldn\'t register');
-            })
+            });
         }
 
         function gotoApp(app_id) {

@@ -24,7 +24,7 @@
 
             userApiService.login(user).then(function(response) {
                 if (response.token) {
-                    authToken.setToken(response.token);
+                    authToken.setToken(response.token, response.user);
                     $state.go('main');
                 } else {
                     alert('warning', 'Oops!', 'Something is wrong!, check your credential and try again.');
