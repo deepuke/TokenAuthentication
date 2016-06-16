@@ -13,7 +13,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 	});
 
 	router.get("/getAllRoles", function(req, res) {
-		var query = 'SELECT * FROM role'
+		var query = 'SELECT * FROM role';
 		var table = ["role"];
 		query = mysql.format(query, table);
 		connection.query(query, function(err, rows) {
