@@ -56,9 +56,10 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 		});
 	});
 
-	router.put("/updateUserRole", function(req, res) {
+	router.put('/updateUserRoles', deleteExistingRoles, AddNewRoles);
+
+	function deleteExistingRoles(req, res, next) {
 		var user = req.body;
-		console.log(user);
 		var query = 'DELETE FROM n4msaas.user_role where email_id = "' + user.email_id + '"';
 		var table = ["user_role"];
 		query = mysql.format(query, table);
@@ -70,40 +71,69 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 					"Message" : "Error executing MySQL query"
 				});
 			} else {
-				var len = user.newRoles.length;
-				for (var i = 0; i < len; i++) {
-					console.log(user.newRoles[i]);
-					var query = 'INSERT INTO n4msaas.user_role  (role_id, email_id) VALUES ("' + parseInt(user.newRoles[i]) + '", "' + user.email_id + '")';
-					var table = [""];
-					query = mysql.format(query, table);
-					console.log(query);
-					connection.query(query, function(err, rows) {
-						if (err) {
-							console.log(err);
-							res.json({
-								"Error" : true,
-								"Message" : "Error executing MySQL query"
-							});
-						} else {
-							if (i == len - 1) {
-								res.json({
-									"Error" : false,
-									"Message" : "Updated Successfull"
-								});
-							}
-						}
-					});
-				}
-
-				res.json({
-					"Error" : false,
-					"Message" : "Updated Successfull"
-				});
-
+				next();
 			}
 		});
+	}
 
-	});
+	function AddNewRoles(req, res, next) {
+		var user = req.body;
+		var len = user.role_ids.length;
+		for (var i = 0; i < len; i++) {
+			console.log(user.role_ids[i]);
+			var query = 'INSERT INTO n4msaas.user_role  (role_id, email_id) VALUES ("' + parseInt(user.role_ids[i]) + '", "' + user.email_id + '")';
+			var table = [""];
+			query = mysql.format(query, table);
+			console.log(query);
+			connection.query(query, function(err, rows) {
+				if (err) {
+					console.log(err);
+					res.json({
+						"Error" : true,
+						"Message" : "Error executing MySQL query"
+					});
+				} else {
+					if (i == len - 1) {
+						res.json({
+							"Error" : false,
+							"Message" : "Updated Successfull"
+						});
+					}
+				}
+			});
+		}
+
+		res.json({
+			"Error" : false,
+			"Message" : "Updated Successfull"
+		});
+		// var values = [];
+		// for (var i = 0; i < user.role_ids.length; i++) {
+		// values.push([user.role_ids[i], String(user.email_id)]);
+		// }
+		// console.log(values);
+		// var query = 'INSERT INTO user_role  (role_id, email_id) VALUES ?';
+		// var table = ["user_role"];
+		// //query = mysql.format(query, table);
+		// console.log(query);
+		// connection.query(query, [values], function(err, rows) {
+		// if (err) {
+		// console.log(err);
+		// res.json({
+		// "Error" : true,
+		// "Message" : "Error executing MySQL query"
+		// });
+		// } else {
+		// res.json({
+		// "Error" : false,
+		// "Message" : "Updated Successfull"
+		// });
+		// }
+		// });
+	}
+
+
+	
 
 };
 module.exports = REST_ROUTER;

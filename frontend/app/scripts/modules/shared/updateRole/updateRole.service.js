@@ -22,9 +22,8 @@
         };
 
         function updateUserRole(user){
-            debugger;
             var deferred = $q.defer();
-            $http.put(API_URL +'updateUserRole/', user).success(function(response) {
+            $http.put(API_URL +'updateUserRoles/', user).success(function(response) {
                 deferred.resolve(response);
             }).error(function(error) {
                 deferred.reject(error);

@@ -15,7 +15,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
 	router.post("/getusers", function(req, res) {
 		var user = req.body;
-		console.log(req.headers);
+		//console.log(req.headers);
 		var query = 'SELECT email_id, username, address, zipcode, companyname FROM n4msaas.user where user.email_id = "' + user.email_id + '"';
 		//var query = 'SELECT * FROM n4msaas.user_role INNER JOIN n4msaas.user on user_role.email_id=user.email_id';
 		var table = ["user"];
@@ -39,11 +39,14 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
 	router.post("/getuserByEmail", function(req, res) {
 		var user = req.body;
-		console.log(user);
-		//var query = 'SELECT email_id, username, address, zipcode, companyname FROM n4msaas.user where user.email_id = "' + user.email_id + '"';
-		var query = 'SELECT * FROM n4msaas.user_role INNER JOIN n4msaas.user on user_role.email_id=user.email_id';
+
+		if (user.email_id == null) {
+			res.end();
+		}
+		var query = 'SELECT * FROM n4msaas.user_role INNER JOIN n4msaas.user on user_role.email_id=user.email_id WHERE user_role.email_id IN (SELECT user.email_id FROM user WHERE user.email_id = "' + user.email_id + '")';
 		var table = ["user"];
 		query = mysql.format(query, table);
+		console.log(query);
 		connection.query(query, function(err, rows) {
 			if (err) {
 				console.log(err);
@@ -52,26 +55,32 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 					"Message" : "Error executing MySQL query"
 				});
 			} else {
-				var item = {};
-				for (var i = 0; i < rows.length; i++) {
-					if (rows[i].email_id === user.email_id) {
-						delete rows[i].password;
-						item = rows[i];
+				console.log(rows);
+				var item = {
+					role_ids : [],
+					user : rows[0]
+				};
+				if (rows.length) {
+					delete item.user.password;
+					for (var i = 0; i < rows.length; i++) {
+						item.role_ids.push(rows[i].role_id);
 					}
+					delete item.user.role_id;
 				}
+
+				res.json({
+					"Error" : false,
+					"Message" : "Success",
+					"Users" : item,
+				});
 			}
-			res.json({
-				"Error" : false,
-				"Message" : "Success",
-				"Users" : item,
-			});
+
 		});
 	});
 
 	router.post("/updateUser", function(req, res) {
 		var user = req.body;
 		user.password = md5(user.password);
-		console.log(user);
 		var query = 'UPDATE n4msaas.user SET username="' + user.username + '", address="' + user.address + '",zipcode=' + user.zipcode + ', companyname="' + user.companyname + '" WHERE email_id="' + user.email_id + '"';
 		var table = ["user"];
 		query = mysql.format(query, table);
@@ -98,8 +107,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 		user.password = md5(user.password);
 		var query = 'SELECT user_role.email_id, user_role.role_id FROM user_role WHERE user_role.email_id IN';
 		query += '( SELECT user.email_id FROM user WHERE email_id = "' + user.email_id + '" and  password="' + user.password + '")';
-		
-		console.log(query);
 		var table = ["user"];
 		query = mysql.format(query, table);
 		connection.query(query, function(err, rows) {
@@ -110,7 +117,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 					"Message" : "Error executing MySQL query"
 				});
 			} else {
-				console.log(rows[0]);				
+				console.log(rows[0]);
 				createSendToken(rows[0], res);
 			}
 		});
@@ -118,11 +125,9 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
 	router.post("/user", function(req, res) {
 		var user = req.body;
-		console.log(user);
 		var query = 'INSERT INTO n4msaas.user SET email_id = "' + user.email_id + '", username="' + user.username + '", password="' + md5(user.password) + '", address="' + user.address + '", zipcode=' + parseInt(user.zipcode) + ', companyname="' + user.companyname + '"';
 		var table = ["user"];
 		query = mysql.format(query, table);
-		console.log(query);
 		connection.query(query, function(err, rows) {
 			if (err) {
 				console.log(err);
@@ -165,11 +170,8 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
 	router.get("/getusers", function(req, res) {
 		var user = req.body;
-		console.log(req.headers.authorization);
 		var token = req.headers.authorization.split(' ')[1];
 		var payload = jwt.decode(token, "shhh..");
-		console.log(payload);
-
 		var query = 'SELECT role_id FROM n4msaas.user_role WHERE user_role.email_id = "' + payload.sub + '"';
 		var table = ["user_role"];
 		query = mysql.format(query, table);

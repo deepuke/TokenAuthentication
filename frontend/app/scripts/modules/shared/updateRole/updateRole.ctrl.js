@@ -37,7 +37,7 @@
             console.log(_self.data.multipleSelect);
             var user = {
                 email_id : _self.emaild,
-                newRoles : _self.data.multipleSelect
+                role_ids : _self.data.multipleSelect
             };
             debugger;
             updateUserRoleApiService.updateUserRole(user).then(function(response){
