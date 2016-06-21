@@ -9,9 +9,15 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 
 	router.post("/getAllApps", function(req, res) {
 		var user = req.body;
-		//console.log(user);
-		var query = 'SELECT app_id, app_name FROM application WHERE application.app_id IN ';
-		query += '(SELECT application_user.app_id FROM application_user WHERE application_user.user_id = "' + user.user_id + '")';
+		if (user.user_id) {
+			var query = 'SELECT app_id, app_name FROM application WHERE application.app_id IN ';
+			query += '(SELECT application_user.app_id FROM application_user WHERE application_user.user_id = "' + user.user_id + '")';
+		} else {
+			var query = 'SELECT app_id, app_name FROM application WHERE application.app_id IN ';
+			query += '(SELECT application_user.app_id FROM application_user WHERE application_user.user_id IN';
+			query += '(SELECT user_id FROM user WHERE user.username = "' + user.username + '"))';
+		}
+
 		var table = ["application"];
 		query = mysql.format(query, table);
 		connection.query(query, function(err, rows) {

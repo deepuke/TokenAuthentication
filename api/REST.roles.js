@@ -35,11 +35,9 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 
 	router.post("/addRole", function(req, res) {
 		var role = req.body;
-		//console.log(role);
 		var query = 'INSERT INTO  role  (role_id, role_name) VALUES ("' + role.role_id + '", "' + role.role_name + '")';
 		var table = ["role"];
 		query = mysql.format(query, table);
-		//console.log(query);
 		connection.query(query, function(err, rows) {
 			if (err) {
 				console.log(err);
@@ -80,11 +78,9 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 		var user = req.body;
 		var len = user.role_ids.length;
 		for (var i = 0; i < len; i++) {
-			//console.log(user.role_ids[i]);
 			var query = 'INSERT INTO n4msaas.user_role  (role_id, user_id) VALUES ("' + parseInt(user.role_ids[i]) + '", "' + user.user_id + '")';
 			var table = [""];
 			query = mysql.format(query, table);
-			//console.log(query);
 			connection.query(query, function(err, rows) {
 				if (err) {
 					console.log(err);
@@ -111,11 +107,9 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 		// for (var i = 0; i < user.role_ids.length; i++) {
 		// values.push([user.role_ids[i], String(user.email_id)]);
 		// }
-		// console.log(values);
 		// var query = 'INSERT INTO user_role  (role_id, email_id) VALUES ?';
 		// var table = ["user_role"];
 		// //query = mysql.format(query, table);
-		// console.log(query);
 		// connection.query(query, [values], function(err, rows) {
 		// if (err) {
 		// console.log(err);

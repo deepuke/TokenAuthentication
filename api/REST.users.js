@@ -45,7 +45,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var query = 'SELECT * FROM n4msaas.user_role INNER JOIN n4msaas.user on user_role.user_id=user.user_id WHERE user_role.user_id IN (SELECT user.user_id FROM user WHERE user.username = "' + user.username + '")';
         var table = ["user"];
         query = mysql.format(query, table);
-        //console.log(query);
         connection.query(query, function(err, rows) {
             if (err) {
                 console.log(err);
@@ -86,7 +85,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var query = 'SELECT * FROM n4msaas.user_role INNER JOIN n4msaas.user on user_role.user_id=user.user_id WHERE user_role.user_id IN (SELECT user.user_id FROM user WHERE user.user_id = "' + user.user_id + '")';
         var table = ["user"];
         query = mysql.format(query, table);
-        //console.log(query);
         connection.query(query, function(err, rows) {
             if (err) {
                 console.log(err);
@@ -95,7 +93,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Message": "Error executing MySQL query"
                 });
             } else {
-                //console.log(rows);
                 var item = {
                     role_ids: [],
                     user: rows[0]
@@ -132,7 +129,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Message": "Error executing MySQL query"
                 });
             } else {
-                //console.log(rows);
                 res.json({
                     "Error": false,
                     "Message": "Success",
@@ -157,7 +153,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Message": "Error executing MySQL query"
                 });
             } else {
-                //console.log(rows[0]);
                 createSendToken(rows[0], res);
             }
         });
@@ -231,7 +226,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Message": "Error executing MySQL query, User Role is not created"
                 });
             } else {
-                //console.log(rows[0]);
                 selectedUser.user_id = rows[0].user_id;
                 next();
             }
@@ -246,10 +240,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var user = req.body;
         var token = req.headers.authorization.split(' ')[1];
         var payload = jwt.decode(token, "shhh..");
-        console.log(user);
-        console.log(token);
-
-
         if (user.role_id !== ADMIN_ROLE_ID) {
             res.json({
                 "status": 403,
@@ -261,7 +251,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             var query = 'SELECT user.username, user.email_id, user.companyname FROM user ';
             var table = ["user"];
             query = mysql.format(query, table);
-            console.log(query);
             connection.query(query, function(err, rows) {
                 if (err) {
                     console.log(err);
