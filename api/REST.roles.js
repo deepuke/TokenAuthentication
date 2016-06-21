@@ -35,11 +35,11 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 
 	router.post("/addRole", function(req, res) {
 		var role = req.body;
-		console.log(role);
+		//console.log(role);
 		var query = 'INSERT INTO  role  (role_id, role_name) VALUES ("' + role.role_id + '", "' + role.role_name + '")';
 		var table = ["role"];
 		query = mysql.format(query, table);
-		console.log(query);
+		//console.log(query);
 		connection.query(query, function(err, rows) {
 			if (err) {
 				console.log(err);
@@ -60,7 +60,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 
 	function deleteExistingRoles(req, res, next) {
 		var user = req.body;
-		var query = 'DELETE FROM n4msaas.user_role where email_id = "' + user.email_id + '"';
+		var query = 'DELETE FROM n4msaas.user_role where user_id = "' + user.user_id + '"';
 		var table = ["user_role"];
 		query = mysql.format(query, table);
 		connection.query(query, function(err, rows) {
@@ -80,11 +80,11 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 		var user = req.body;
 		var len = user.role_ids.length;
 		for (var i = 0; i < len; i++) {
-			console.log(user.role_ids[i]);
-			var query = 'INSERT INTO n4msaas.user_role  (role_id, email_id) VALUES ("' + parseInt(user.role_ids[i]) + '", "' + user.email_id + '")';
+			//console.log(user.role_ids[i]);
+			var query = 'INSERT INTO n4msaas.user_role  (role_id, user_id) VALUES ("' + parseInt(user.role_ids[i]) + '", "' + user.user_id + '")';
 			var table = [""];
 			query = mysql.format(query, table);
-			console.log(query);
+			//console.log(query);
 			connection.query(query, function(err, rows) {
 				if (err) {
 					console.log(err);
@@ -133,7 +133,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 	}
 
 
-	
+
 
 };
 module.exports = REST_ROUTER;

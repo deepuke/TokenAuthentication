@@ -14,7 +14,7 @@
 
     function RegisterController($scope, $log, $rootScope, alert, $http, $state, authToken, $auth, userApiService) {
         var _self = this;
-        $scope.username = '';
+       	this.username = '';
         this.email_id = '';
         this.password = '';
         this.password_confirm = '';
@@ -37,7 +37,7 @@
                 if (!response.Users.length) {
                     saveUser(user);
                 } else {
-                    alert('warning', 'Oops!', 'Couldn\'t register eamil-id already exist');
+                    alert('warning', 'Oops!', 'Couldn\'t register, User name already exist');
                 }
             }).catch(function(err) {
                 alert('warning', 'Oops!', 'Couldn\'t register');
@@ -56,8 +56,7 @@
                     _self.companyname = '';
 
                     alert('sucess', 'User Registration!', 'sucessfully completed');
-                    debugger;
-                    authToken.setToken(response.token);
+                    authToken.setToken(response.token, response.user);
                     $state.go('main');
                 }
             }).catch(function(err) {

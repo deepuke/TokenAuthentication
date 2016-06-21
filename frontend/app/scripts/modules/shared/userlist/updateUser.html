@@ -7,9 +7,6 @@
         <label>Address : <strong>{{ctrl.userObject.user.address}}</strong></label>
     </div>
     <div>
-        <label>Address : <strong>{{ctrl.userObject.user.address}}</strong></label>
-    </div>
-    <div>
         <label>zipcode : <strong>{{ctrl.userObject.user.zipcode}}</strong></label>
     </div>
     <div>
@@ -18,8 +15,5 @@
     <div>
         <label>Current Role : <strong>{{ctrl.userObject.role_ids | json}}</strong></label>
     </div>
-
-    <update-role emaild="ctrl.userObject.user.email_id"></update-role>
-
-
+    <update-role user="ctrl.userObject.user"></update-role>
 </div>

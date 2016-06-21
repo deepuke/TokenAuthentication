@@ -65,7 +65,7 @@
             templateUrl: '/scripts/modules/shared/userlist/updateUser.html',
             controller: 'updateUserCtrl',
             params: {
-                email_id: null
+                username: null
             },
             controllerAs: 'ctrl'
         });

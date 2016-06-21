@@ -14,11 +14,11 @@
 
     function LoginController($scope, $log, $rootScope, $cookieStore, alert, $http, $state, userApiService, authToken) {
         var _self = this;
-        this.email_id = '';
+        this.username = '';
         this.password = '';
         _self.submit = function() {
             var user = {
-                email_id: _self.email_id,
+                username: _self.username,
                 password: _self.password
             };
 

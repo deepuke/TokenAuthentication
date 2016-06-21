@@ -33,14 +33,13 @@
         }
 
         function updateUserRole() {
-            console.log(_self.emaild);
-            console.log(_self.data.multipleSelect);
-            var user = {
-                email_id : _self.emaild,
+            // console.log(_self.user);
+            // console.log(_self.data.multipleSelect);
+            var updatedUser = {
+                user_id : _self.user.user_id,
                 role_ids : _self.data.multipleSelect
             };
-            debugger;
-            updateUserRoleApiService.updateUserRole(user).then(function(response){
+            updateUserRoleApiService.updateUserRole(updatedUser).then(function(response){
                 console.log(response);
                 $state.go('admin.config');
             }).catch(function(err){

@@ -10,7 +10,7 @@
             restrict: 'EA',
             templateUrl: 'scripts/modules/shared/updateRole/updateRole.html',
             scope: {
-                emaild : '='
+                user : '='
             },
             controller: 'updateRoleCtrl',
             controllerAs: 'ctrl',

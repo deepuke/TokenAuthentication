@@ -13,7 +13,7 @@
 	<tbody>
 		<tr ng-repeat="user in ctrl.users">
 			<td>{{$index + 1}}</td>
-			<td><span><a class="cursor-pointer" ng-click="ctrl.updateUser(user.email_id)">{{user.username}}</a></span></td>
+			<td><span><a class="cursor-pointer" ng-click="ctrl.updateUser(user.username)">{{user.username}}</a></span></td>
 			<td>{{user.email_id}}</td>
 			<td>{{user.companyname}}</td>
 			<td>{{user.roles}}</td>

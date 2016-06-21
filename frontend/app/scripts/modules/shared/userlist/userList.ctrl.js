@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('angularNodeTokenAuthApp').controller('userListCtrl', userListController);
-    userListController.$inject = ['$scope', '$log', '$rootScope', 'alert', '$http', '$state', '$stateParams', 'userApiService'];
+    userListController.$inject = ['$scope', '$log', '$rootScope', 'alert', '$http', '$state', '$stateParams', 'userListApiService', 'authToken'];
 
-    function userListController($scope, $log, $rootScope, alert, $http, $state, $stateParams, userApiService) {
+    function userListController($scope, $log, $rootScope, alert, $http, $state, $stateParams, userListApiService, authToken) {
 
         console.log('userList controller loaded');
         var _self = this;
@@ -16,27 +16,27 @@
         init();
 
         function init() {
-            getAllUsers();
-            if ($stateParams.email_id) {
-                getuserByEmail();
-            }
+            var loggedUser = authToken.getLoggedUser();
+            getAllUsers(loggedUser);
+            // if ($stateParams.email_id) {
+            //     getuserByEmail();
+            // }
         }
 
-        function getuserByEmail() {
-            var user = {
-                email_id: $stateParams.email_id
-            };
-            userApiService.getuserByEmail(user).then(function(response) {
-                debugger;
-                _self.currentUser = response.Users;
-            }).catch(function(error) {
-                alert('warning', 'Oops!', 'Couldn\'t register');
-            });
-        }
+        // function getuserByEmail() {
+        //     var user = {
+        //         email_id: $stateParams.email_id
+        //     };
+        //     userApiService.getuserByEmail(user).then(function(response) {
+        //         debugger;
+        //         _self.currentUser = response.Users;
+        //     }).catch(function(error) {
+        //         alert('warning', 'Oops!', 'Couldn\'t register');
+        //     });
+        // }
 
-        function getAllUsers() {
-            console.log($stateParams);
-            userApiService.getAllUsers().then(function(response) {
+        function getAllUsers(user) {
+            userListApiService.getAllUsers(user).then(function(response) {
                 if(response.status === 403){
                     alert('warning', 'Oops!', 'Access Denied!');
                     $state.go('main');
@@ -47,20 +47,19 @@
             });
         }
 
-        function updateUser(email_id) {
-            console.log(email_id);
+        function updateUser(username) {
             $state.go('admin.updateUser', {
-                "email_id": email_id
+                username : username
             });
         }
 
-        function submitUpdatedDetails() {
-            userApiService.updateUser().then(function(response) {
-                _self.users = response.Users;
-            }).catch(function(error) {
-                alert('warning', 'Oops!', 'Couldn\'t register');
-            });
-        }
+        // function submitUpdatedDetails() {
+        //     userApiService.updateUser().then(function(response) {
+        //         _self.users = response.Users;
+        //     }).catch(function(error) {
+        //         alert('warning', 'Oops!', 'Couldn\'t register');
+        //     });
+        // }
     }
 
 })();
