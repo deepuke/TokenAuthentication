@@ -1,22 +1,31 @@
-<table class = "table">
-	<caption style="color:blue;"><b>Users</b></caption>
-	<thead>
-		<tr class="info">
-			<th>#</th>
-			<th>Username</th>
-			<th>Email Id</th>
-			<th>Company Name</th>
-			<th>Roles</th>
-		</tr>
-	</thead>
+<div class="row">
+	<div class="col-sm-12">
+		<caption style="color:blue;">
+			<b>Users</b>&nbsp;
+		</caption>
+		<a class="cursor-pointer"> Add New User </a>
+	</div>
+	<div class="col-sm-12">
+		<table class = "table">
+			<thead>
+				<tr class="info">
+					<th>#</th>
+					<th>Username</th>
+					<th>Email Id</th>
+					<th>Company Name</th>
+					<th>Roles</th>
+				</tr>
+			</thead>
 
-	<tbody>
-		<tr ng-repeat="user in ctrl.users">
-			<td>{{$index + 1}}</td>
-			<td><span><a class="cursor-pointer" ng-click="ctrl.updateUser(user.username)">{{user.username}}</a></span></td>
-			<td>{{user.email_id}}</td>
-			<td>{{user.companyname}}</td>
-			<td>{{user.roles}}</td>
-		</tr>
-	</tbody>
-</table>
+			<tbody>
+				<tr ng-repeat="user in ctrl.users">
+					<td>{{$index + 1}}</td>
+					<td><span><a class="cursor-pointer" ng-click="ctrl.updateUser(user.username)">{{user.username}}</a></span></td>
+					<td>{{user.email_id}}</td>
+					<td>{{user.companyname}}</td>
+					<td>{{user.roles}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -1,22 +1,33 @@
-<table class="table">
-	<caption style="color:blue;"><b>Applications</b></caption>
-	<thead>
-		<tr class="info">
-			<th>#</th>
-			<th>Id</th>
-			<th>App Name</th>
-			<th ng-if="ctrl.edit">&nbsp;</th>
-			<th ng-if="ctrl.permission">&nbsp;</th>
-		</tr>
-	</thead>
+<div class="row">
+	<div class="col-sm-12">
 
-	<tbody>
-		<tr ng-repeat="app in ctrl.apps">
-			<td>{{$index + 1}}</td>
-			<td>{{app.app_id}}</td>
-			<td>{{app.app_name}}</td>
-			<td ng-if="ctrl.edit"><span><a class="cursor-pointer" ng-click="ctrl.editApp(app.app_id)"> Edit</a></span></td>
-			<td ng-if="ctrl.permission"><span><a class="cursor-pointer" ng-click="ctrl.gotoApp(app.app_id)"> Go to App</a></span></td>
-		</tr>
-	</tbody>
-</table>
+		<caption style="color:blue;">
+			<b>Applications</b> &nbsp;
+		</caption>
+
+		<a ui-sref="admin.applications" class="cursor-pointer"> Add New Applications </a>
+
+	</div>
+	<div class="col-sm-12">
+		<table class="table">
+			<thead>
+				<tr class="info">
+					<th>#</th>
+					<th>Id</th>
+					<th>App Name</th>
+					<th ng-if="ctrl.edit">&nbsp;</th>
+					<th ng-if="ctrl.permission">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="app in ctrl.apps">
+					<td>{{$index + 1}}</td>
+					<td>{{app.app_id}}</td>
+					<td>{{app.app_name}}</td>
+					<td ng-if="ctrl.edit"><span><a class="cursor-pointer" ng-click="ctrl.editApp(app.app_id)"> Edit</a></span></td>
+					<td ng-if="ctrl.permission"><span><a class="cursor-pointer" ng-click="ctrl.gotoApp(app.app_id)"> Go to App</a></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
