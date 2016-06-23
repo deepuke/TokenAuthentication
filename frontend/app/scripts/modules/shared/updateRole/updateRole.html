@@ -1,16 +1,21 @@
-<h5>Update Roles</h5>
-<div>
-    <label for="multipleSelect"> Available Roles (Multiple select): </label>
-    <br>
-    <select name="multipleSelect" id="multipleSelect" ng-model="ctrl.data.multipleSelect" multiple>
-        <option value="">---Please select---</option>
-        <option ng-repeat="option in ctrl.data.roles" value="{{option.role_id}}">{{option.role_name}}</option>
-    </select>
-    <br>
-    <tt>multipleSelect = {{ctrl.data.multipleSelect}}</tt>
-    <br/>
+<div class="panel panel-default">
+    <div class="panel-heading">Update Roles</div>
+    <div class="panel-body">
+        <div>
+            <label for="multipleSelect"> Available Roles (Multiple select): </label>
+            <br>
+            <select name="multipleSelect" id="multipleSelect" ng-model="ctrl.data.multipleSelect" multiple>
+                <option value="">---Please select---</option>
+                <option ng-repeat="option in ctrl.data.roles" value="{{option.role_id}}">{{option.role_name}}</option>
+            </select>
+            <br>
+            <tt>multipleSelect = {{ctrl.data.multipleSelect}}</tt>
+            <br/>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <button ng-disabled="!ctrl.data.multipleSelect.length" class="btn btn-sm btn-primary" type="button" ng-click="ctrl.updateUserRole()">
+            Update User Roles
+        </button>
+    </div>
 </div>
-
-<button ng-disabled="!ctrl.data.multipleSelect.length" class="btn btn-sm btn-primary btn-block" type="button" ng-click="ctrl.updateUserRole()">
-    Update User Roles
-</button>

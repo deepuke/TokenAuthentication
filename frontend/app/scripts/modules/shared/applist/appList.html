@@ -1,6 +1,7 @@
 <div class="row">
 	<div class="col-sm-12">
 		<a ng-show="ctrl.isAuthenticated() && ctrl.isAdmin()" ui-sref="admin.applications" class="cursor-pointer"> <i class="glyphicon glyphicon-plus" aria-hidden="true"/>Add New Applications </a>
+		<span class="pull-right"> <small>Available Apps Count: </small><span class="badge">{{ctrl.apps.length}}</span></span>
 	</div>
 	<div class="col-sm-12">
 		<table class="table">

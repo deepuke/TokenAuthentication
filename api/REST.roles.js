@@ -35,7 +35,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 
 	router.post("/addRole", function(req, res) {
 		var role = req.body;
-		var query = 'INSERT INTO  role  (role_id, role_name) VALUES ("' + role.role_id + '", "' + role.role_name + '")';
+		var query = 'INSERT INTO  role  (role_id, role_name) VALUES (null, "' + role.role_name + '")';
 		var table = ["role"];
 		query = mysql.format(query, table);
 		connection.query(query, function(err, rows) {
