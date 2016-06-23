@@ -4,9 +4,9 @@
     angular
         .module('angularNodeTokenAuthApp')
         .controller('menuCtrl', menuController);
-    menuController.$inject = ['$scope', '$log', '$rootScope', 'alert', '$http', '$state', '$cookieStore', 'authToken'];
+    menuController.$inject = ['authToken'];
 
-    function menuController($scope, $log, $rootScope, alert, $http, $state, $cookieStore, authToken) {
+    function menuController(authToken) {
         var _self = this;
         _self.isAuthenticated = authToken.isAuthenticated;
         _self.isAdmin = authToken.isAdmin;

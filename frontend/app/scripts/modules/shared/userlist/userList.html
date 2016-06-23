@@ -1,16 +1,12 @@
 <div class="row">
-	<div class="col-sm-12">
-		<caption style="color:blue;">
-			<b>Users</b>&nbsp;
-		</caption>
+	<div class="col-sm-12">		
 		<a class="cursor-pointer"> Add New User </a>
 	</div>
 	<div class="col-sm-12">
-		<table class = "table">
+		<table class="table">
 			<thead>
 				<tr class="info">
-					<th>#</th>
-					<th>Username</th>
+					<th>User Name</th>
 					<th>Email Id</th>
 					<th>Company Name</th>
 					<th>Roles</th>
@@ -18,8 +14,7 @@
 			</thead>
 
 			<tbody>
-				<tr ng-repeat="user in ctrl.users">
-					<td>{{$index + 1}}</td>
+				<tr ng-repeat="user in ctrl.users | orderBy:'username'">
 					<td><span><a class="cursor-pointer" ng-click="ctrl.updateUser(user.username)">{{user.username}}</a></span></td>
 					<td>{{user.email_id}}</td>
 					<td>{{user.companyname}}</td>

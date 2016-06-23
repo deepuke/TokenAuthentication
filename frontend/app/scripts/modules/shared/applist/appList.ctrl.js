@@ -12,6 +12,8 @@
         this.apps = [];
         this.gotoApp = gotoApp;
         this.editApp = editApp;
+        _self.isAuthenticated = authToken.isAuthenticated;
+        _self.isAdmin = authToken.isAdmin;
 
         init();
 
@@ -20,7 +22,7 @@
             getAllApps(loggedUser);
         }
 
-        function getAllApps(user) {        	
+        function getAllApps(user) {
             applicationApiServices.getAllApps(user).then(function(response) {
                 _self.apps = response.apps;
             }).catch(function(error) {
