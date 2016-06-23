@@ -41,7 +41,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
 	router.post("/addApplication", function(req, res) {
 		var application = req.body;
 		//console.log(application);
-		var query = 'INSERT INTO  application  (app_id, app_name) VALUES ("' + application.app_id + '", "' + application.app_name + '")';
+		var query = 'INSERT INTO  application  (app_id, app_name) VALUES (null, "' + application.app_name + '")';
 		var table = ["application"];
 		query = mysql.format(query, table);
 		connection.query(query, function(err, rows) {
