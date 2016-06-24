@@ -27,7 +27,7 @@
                     authToken.setToken(response.token, response.user);
                     $state.go('main');
                 } else {
-                    alert('warning', 'Oops!', 'Something is wrong!, check your credential and try again.');
+                    alert('warning', 'Oops!', response.Message);
                 }
             }).catch(function(err) {
                 alert('warning', 'Oops!', 'Something is wrong!, Check your credential and try again.');

@@ -20,14 +20,14 @@
                 var user = {
                     username: $stateParams.username
                 }
-                getUserIdByUserName(user);
+                getUserByUserName(user);
             } else {
                 $state.go('admin.config');
             }
         }
 
-        function getUserIdByUserName(user) {
-            userListApiService.getUserIdByUserName(user).then(function(response) {
+        function getUserByUserName(user) {
+            userListApiService.getUserByUserName(user).then(function(response) {
                 _self.userObject = response.Users;
             }).catch(function(error) {
                 alert('warning', 'Oops!', 'Couldn\'t register');

@@ -18,12 +18,23 @@
         return {
             getAllUsers: getAllUsers,
             getuserByID : getuserByID,
-            getUserIdByUserName : getUserIdByUserName
+            getUserByUserName : getUserByUserName,
+            changeUserState : changeUserState
         };
 
-        function getUserIdByUserName(user){
+        function changeUserState(user){
             var deferred = $q.defer();
-            $http.post(API_URL + 'getUserIdByUserName/', user).success(function(response) {
+            $http.post(API_URL + 'changeUserState/', user).success(function(response) {
+                deferred.resolve(response);
+            }).error(function(error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        }
+
+        function getUserByUserName(user){
+            var deferred = $q.defer();
+            $http.post(API_URL + 'getUserByUserName/', user).success(function(response) {
                 deferred.resolve(response);
             }).error(function(error) {
                 deferred.reject(error);

@@ -7,24 +7,22 @@
 		<table class="table">
 			<thead>
 				<tr class="info">
-					<!-- <th>#</th> -->
 					<th ng-if="ctrl.isAdmin()">Id</th>
 					<th>Applications Name</th>
-					<th ng-if="ctrl.isAdmin()">Actions</th>
+					<th ng-if="ctrl.isAdmin()">Active</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="app in ctrl.apps | orderBy : 'app_id'">
-					<!-- <td>{{$index + 1}}</td> -->
 					<td ng-if="ctrl.isAdmin()">{{app.app_id}}</td>
 					<td><a class="cursor-pointer" ng-click="ctrl.gotoApp(app.app_id)">{{app.app_name}}</a></td>
 					<td ng-if="ctrl.isAdmin()">
 						<span>
-							<a class="cursor-pointer" ng-click="ctrl.editApp(app.app_id)"><i class="glyphicon glyphicon-edit" aria-hidden="true"/></a>
+							<input type="checkbox" ng-model="app.active" ng-change="ctrl.changeAppState(app)">
 						</span>
-						<span>
+						<!-- <span>
 							<a class="cursor-pointer" ng-click="ctrl.remove(app.app_id)"><i class="glyphicon glyphicon-remove" aria-hidden="true" /></a>
-						</span>
+						</span> -->
 					</td>
 				</tr>
 			</tbody>

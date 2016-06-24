@@ -16,7 +16,7 @@
 
         return {
             addApplication: addApplication,
-            getAllApps: getAllApps,
+            // getAllApps: getAllApps,
             getApps: getApps
         };
 
@@ -30,15 +30,15 @@
             return deferred.promise;
         }
 
-        function getAllApps(user) {
-            var deferred = $q.defer();
-            $http.post(API_URL + 'getAllApps/', user).success(function(response) {
-                deferred.resolve(response);
-            }).error(function(error) {
-                deferred.reject(error);
-            });
-            return deferred.promise;
-        }
+        // function getAllApps(user) {
+        //     var deferred = $q.defer();
+        //     $http.post(API_URL + 'getAllApps/', user).success(function(response) {
+        //         deferred.resolve(response);
+        //     }).error(function(error) {
+        //         deferred.reject(error);
+        //     });
+        //     return deferred.promise;
+        // }
 
         function getApps(user) {
             var deferred = $q.defer();

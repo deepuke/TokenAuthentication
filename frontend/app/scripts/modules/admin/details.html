@@ -1,3 +1,17 @@
-<user-list/>
-<app-list edit="false" permission="true" />
-<roles-list/>
+<uib-tabset active="active">
+    <uib-tab index="0" heading="Users">
+        <div class="top-buffer-20">
+            <user-list/>
+        </div>
+    </uib-tab>
+    <uib-tab index="1" heading="Applications">
+        <div class="top-buffer-20">
+            <app-list edit="false" permission="true" />
+        </div>
+    </uib-tab>
+    <uib-tab index="2" heading="Roles">
+        <div class="top-buffer-20">
+            <roles-list/>
+        </div>
+    </uib-tab>
+</uib-tabset>

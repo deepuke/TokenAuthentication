@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-sm-12">
-		<a ui-sref="admin.roles" class="cursor-pointer"> <i class="glyphicon glyphicon-plus" aria-hidden="true"/>Add New Roles </a>
+		<a ui-sref="admin.roles" class="cursor-pointer"> <i class="glyphicon glyphicon-plus" aria-hidden="true" />Add New Roles </a>
 		<span class="pull-right"> <small>Roles Count: </small><span class="badge">{{ctrl.roles.length}}</span></span>
 	</div>
 	<div class="col-sm-12">
@@ -9,20 +9,16 @@
 				<tr class="info">
 					<th>Id</th>
 					<th>Role Name</th>
-					<th>Actions</th>
+					<th ng-if="ctrl.isAdmin()">Active</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="role in ctrl.roles | orderBy : 'role_id'">
 					<td>{{role.role_id}}</td>
 					<td>{{role.role_name}}</td>
-					<td>
-						<span>
-							<a class="cursor-pointer" ng-click="ctrl.updateRole(role.role_id)"><i class="glyphicon glyphicon-edit" aria-hidden="true"/></a>
-						</span>
-						<span>
-							<a class="cursor-pointer" ng-click="ctrl.updateRole(role.role_id)"><i class="glyphicon glyphicon-remove" aria-hidden="true"/></a>
-						</span>
+
+					<td ng-if="ctrl.isAdmin()">
+						<input type="checkbox" ng-model="role.active" ng-change="ctrl.changeRoleState(role)">
 					</td>
 				</tr>
 			</tbody>

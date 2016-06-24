@@ -36,7 +36,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
-    router.post("/getUserIdByUserName", function(req, res) {
+    router.post("/getUserByUserName", function(req, res) {
         var user = req.body;
 
         if (user.username == null) {
@@ -115,6 +115,29 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
+    router.post("/changeUserState", function(req, res) {
+        var user = req.body;
+        console.log(user);
+        var query = 'UPDATE n4msaas.user SET active='+user.active+' WHERE username="' + user.username + '"';
+        var table = ["user"];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else {
+                res.json({
+                    "Error": false,
+                    "Message": "Success",
+                    "Users": rows
+                });
+            }
+        });
+    });
+
     router.post("/updateUser", function(req, res) {
         var user = req.body;
         user.password = md5(user.password);
@@ -142,7 +165,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var user = req.body;
         user.password = md5(user.password);
         var query = 'SELECT user_role.user_id, user_role.role_id FROM user_role WHERE user_role.user_id IN';
-        query += '( SELECT user.user_id FROM user WHERE username = "' + user.username + '" and  password="' + user.password + '")';
+        query += '( SELECT user.user_id FROM user WHERE username = "' + user.username + '" and  password="' + user.password + '" and  active=1)';
         var table = ["user"];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
@@ -153,7 +176,17 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Message": "Error executing MySQL query"
                 });
             } else {
-                createSendToken(rows[0], res);
+                console.log(rows);
+                if(!rows.length){
+                    res.json({
+                        "Error": false,
+                        "Message": "Check your credential, Or user might not be active please try again Or contact administrator.",
+                        "Users": rows
+                    });
+                } else {
+                    createSendToken(rows[0], res);
+                }
+
             }
         });
     });
@@ -162,7 +195,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
     function saveUserData(req, res, next) {
         var user = req.body;
-        var query = 'INSERT INTO n4msaas.user SET  email_id = "' + user.email_id + '", username="' + user.username + '", password="' + md5(user.password) + '", address="' + user.address + '", zipcode=' + parseInt(user.zipcode) + ', companyname="' + user.companyname + '"';
+        var query = 'INSERT INTO n4msaas.user SET  email_id = "' + user.email_id + '", username="' + user.username + '", password="' + md5(user.password) + '", address="' + user.address + '", zipcode=' + parseInt(user.zipcode) + ', companyname="' + user.companyname + '", active=1';
         var table = ["user"];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
@@ -248,7 +281,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 "Users": []
             });
         } else {
-            var query = 'SELECT user.username, user.email_id, user.companyname FROM user ';
+            var query = 'SELECT user.username, user.email_id, user.companyname, user.active FROM user ';
             var table = ["user"];
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {

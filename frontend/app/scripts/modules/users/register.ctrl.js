@@ -56,8 +56,8 @@
                     _self.companyname = '';
 
                     alert('sucess', 'User Registration!', 'sucessfully completed');
-                    authToken.setToken(response.token, response.user);
-                    $state.go('main');
+                    //authToken.setToken(response.token, response.user);
+                    $state.go('login');
                 }
             }).catch(function(err) {
                 alert('warning', 'Oops!', 'Couldn\'t register');

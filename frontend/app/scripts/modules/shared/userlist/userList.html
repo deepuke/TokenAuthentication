@@ -10,7 +10,7 @@
 					<th>User Name</th>
 					<th>Email Id</th>
 					<th>Company Name</th>
-					<th>Roles</th>
+					<th ng-if="ctrl.isAdmin()">Active</th>
 				</tr>
 			</thead>
 
@@ -19,7 +19,9 @@
 					<td><span><a class="cursor-pointer" ng-click="ctrl.updateUser(user.username)">{{user.username}}</a></span></td>
 					<td>{{user.email_id}}</td>
 					<td>{{user.companyname}}</td>
-					<td>{{user.roles}}</td>
+					<td ng-if="ctrl.isAdmin()">
+						<input ng-hide="user.username == 'admin'" type="checkbox" ng-model="user.active" ng-change="ctrl.changeUserState(user)">
+					</td>
 				</tr>
 			</tbody>
 		</table>

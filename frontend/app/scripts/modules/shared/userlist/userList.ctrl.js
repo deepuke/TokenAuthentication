@@ -12,36 +12,44 @@
         this.users = [];
         this.currentUser = {};
         this.updateUser = updateUser;
+        this.changeUserState = changeUserState;
+
+        _self.isAuthenticated = authToken.isAuthenticated;
+        _self.isAdmin = authToken.isAdmin;
 
         init();
 
         function init() {
             var loggedUser = authToken.getLoggedUser();
             getAllUsers(loggedUser);
-            // if ($stateParams.email_id) {
-            //     getuserByEmail();
-            // }
         }
 
-        // function getuserByEmail() {
-        //     var user = {
-        //         email_id: $stateParams.email_id
-        //     };
-        //     userApiService.getuserByEmail(user).then(function(response) {
-        //         debugger;
-        //         _self.currentUser = response.Users;
-        //     }).catch(function(error) {
-        //         alert('warning', 'Oops!', 'Couldn\'t register');
-        //     });
-        // }
+        function changeUserState(user) {
+            debugger;
+            if (user.active === true) {
+                user.active = 1
+            } else {
+                user.active = 0
+            }
+            userListApiService.changeUserState(user).then(function(response) {
+                console.log(response);
+                init();
+            }).catch(function(error) {
+                alert('warning', 'Oops!', 'Couldn\'t register');
+            });
+        }
 
         function getAllUsers(user) {
             userListApiService.getAllUsers(user).then(function(response) {
-                if(response.status === 403){
+                if (response.status === 403) {
                     alert('warning', 'Oops!', 'Access Denied!');
                     $state.go('main');
                 }
                 _self.users = response.Users;
+                for (var i = 0, j = _self.users.length; i < j; i++) {
+                    _self.users[i].active = !!_self.users[i].active;
+                }
+
             }).catch(function(error) {
                 alert('warning', 'Oops!', 'Couldn\'t register');
             });
@@ -49,17 +57,9 @@
 
         function updateUser(username) {
             $state.go('admin.updateUser', {
-                username : username
+                username: username
             });
         }
-
-        // function submitUpdatedDetails() {
-        //     userApiService.updateUser().then(function(response) {
-        //         _self.users = response.Users;
-        //     }).catch(function(error) {
-        //         alert('warning', 'Oops!', 'Couldn\'t register');
-        //     });
-        // }
     }
 
 })();
