@@ -12,6 +12,7 @@
         this.apps = [];
         this.gotoApp = gotoApp;
         this.changeAppState = changeAppState;
+        this.modify = modify;
         _self.isAuthenticated = authToken.isAuthenticated;
         _self.isAdmin = authToken.isAdmin;
 
@@ -19,19 +20,23 @@
 
         function init() {
             var loggedUser = authToken.getLoggedUser();
-            getAllApps(loggedUser);
+            getApps(loggedUser);
         }
 
-        function getAllApps(user) {
-            appListApiService.getAllApps(user).then(function(response) {
+        function getApps(user) {
+            appListApiService.getApps(user).then(function(response) {
                 _self.apps = response.apps;
                 for (var i = 0, j = _self.apps.length; i < j; i++) {
                     _self.apps[i].active = !!_self.apps[i].active;
                 }
 
             }).catch(function(error) {
-                alert('warning', 'Oops!', 'Couldn\'t register');
+                alert('warning', 'Oops!', error);
             });
+        }
+
+        function modify(app_id){            
+            $state.go('admin.applications', {app_id : app_id});
         }
 
         function gotoApp(app_id) {

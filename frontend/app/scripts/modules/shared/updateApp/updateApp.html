@@ -8,7 +8,7 @@
                 <br/>
                 <select class="form-control" name="multipleSelect" id="multipleSelect" ng-model="ctrl.data.multipleSelect" multiple>
                     <option value="">---Please select---</option>
-                    <option ng-repeat="option in ctrl.data.apps" value="{{option.app_id}}">{{option.app_name}}</option>
+                    <option ng-repeat="option in ctrl.data.apps" value="{{option.app_id}}">{{option.app_id}} : {{option.app_name}}</option>
                 </select>
             </div>
 
@@ -26,25 +26,3 @@
         </button>
     </div>
 </div>
-
-<!-- <div class="panel panel-default">
-    <div class="panel-heading">Update Applications</div>
-    <div class="panel-body">
-        <div>
-            <label for="multipleSelect"> Available Applications (Multiple select): </label>
-            <br>
-            <select class="form-control" name="multipleSelect" id="multipleSelect" ng-model="ctrl.data.multipleSelect" multiple>
-                <option value="">---Please select---</option>
-                <option ng-repeat="option in ctrl.data.apps" value="{{option.app_id}}">{{option.app_name}}</option>
-            </select>
-            <br>
-            <tt>multipleSelect = {{ctrl.data.multipleSelect}}</tt>
-            <br/>
-        </div>
-    </div>
-    <div class="panel-footer">
-        <button ng-disabled="!ctrl.data.multipleSelect.length" class="btn btn-sm btn-primary" type="button" ng-click="ctrl.updateUserApp()">
-            Assign Applications
-        </button>
-    </div>
-</div> -->

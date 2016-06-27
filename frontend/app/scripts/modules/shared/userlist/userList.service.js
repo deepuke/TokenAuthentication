@@ -19,12 +19,23 @@
             getAllUsers: getAllUsers,
             getuserByID : getuserByID,
             getUserByUserName : getUserByUserName,
+            getAssignedApp: getAssignedApp,
             changeUserState : changeUserState
         };
 
         function changeUserState(user){
             var deferred = $q.defer();
             $http.post(API_URL + 'changeUserState/', user).success(function(response) {
+                deferred.resolve(response);
+            }).error(function(error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        }
+
+        function getAssignedApp(user){
+            var deferred = $q.defer();
+            $http.post(API_URL + 'getAssignedApp/', user).success(function(response) {
                 deferred.resolve(response);
             }).error(function(error) {
                 deferred.reject(error);
@@ -45,28 +56,20 @@
         function getuserByID(user){
             var deferred = $q.defer();
             $http.post(API_URL + 'getuserByID/', user).success(function(response) {
-
                 deferred.resolve(response);
-
             }).error(function(error) {
                 deferred.reject(error);
-
             });
-
             return deferred.promise;
         }
 
         function getAllUsers(user) {
             var deferred = $q.defer();
             $http.post(API_URL + 'getAllusers/', user).success(function(response) {
-
                 deferred.resolve(response);
-
             }).error(function(error) {
                 deferred.reject(error);
-
             });
-
             return deferred.promise;
         }
     }

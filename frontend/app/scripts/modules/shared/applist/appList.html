@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-sm-12">
-		<a ng-show="ctrl.isAuthenticated() && ctrl.isAdmin()" ui-sref="admin.applications" class="cursor-pointer"> <i class="glyphicon glyphicon-plus" aria-hidden="true"/>Add New Applications </a>
+		<a ng-if="ctrl.edit" ng-show="ctrl.isAuthenticated() && ctrl.isAdmin()" ui-sref="admin.applications" class="cursor-pointer"> <i class="glyphicon glyphicon-plus" aria-hidden="true" />Add New Applications </a>
 		<span class="pull-right"> <small>Available Apps Count: </small><span class="badge">{{ctrl.apps.length}}</span></span>
 	</div>
 	<div class="col-sm-12">
@@ -9,20 +9,20 @@
 				<tr class="info">
 					<th ng-if="ctrl.isAdmin()">Id</th>
 					<th>Applications Name</th>
-					<th ng-if="ctrl.isAdmin()">Active</th>
+					<th ng-if="ctrl.isAdmin() && ctrl.edit">Active</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="app in ctrl.apps | orderBy : 'app_id'">
 					<td ng-if="ctrl.isAdmin()">{{app.app_id}}</td>
-					<td><a class="cursor-pointer" ng-click="ctrl.gotoApp(app.app_id)">{{app.app_name}}</a></td>
-					<td ng-if="ctrl.isAdmin()">
+					<td><a class="cursor-pointer" ng-click="ctrl.gotoApp(app.app_id)">{{app.app_name}}</a> <i class="small" ng-show="!app.active">App is Inactivated</i></td>
+					<td ng-if="ctrl.isAdmin() && ctrl.edit">
 						<span>
 							<input type="checkbox" ng-model="app.active" ng-change="ctrl.changeAppState(app)">
 						</span>
-						<!-- <span>
-							<a class="cursor-pointer" ng-click="ctrl.remove(app.app_id)"><i class="glyphicon glyphicon-remove" aria-hidden="true" /></a>
-						</span> -->
+						<span>
+							<a class="cursor-pointer" ng-click="ctrl.modify(app.app_id)"><i class="glyphicon glyphicon-edit" aria-hidden="true" /></a>
+						</span>
 					</td>
 				</tr>
 			</tbody>

@@ -8,7 +8,11 @@
 
         console.log('userList controller loaded');
         var _self = this;
-        this.userObject = null;
+        this.userObject = {
+            user : {},
+            role_ids : [],
+            apps : []
+        };
         this.roles = [];
 
         init();
@@ -21,6 +25,7 @@
                     username: $stateParams.username
                 }
                 getUserByUserName(user);
+                getAssignedApp(user);
             } else {
                 $state.go('admin.config');
             }
@@ -28,7 +33,18 @@
 
         function getUserByUserName(user) {
             userListApiService.getUserByUserName(user).then(function(response) {
-                _self.userObject = response.Users;
+                _self.userObject.user = response.Users.user;
+                _self.userObject.role_ids = response.Users.role_ids;
+            }).catch(function(error) {
+                alert('warning', 'Oops!', 'Couldn\'t register');
+            });
+        }
+
+        function getAssignedApp(user) {
+            userListApiService.getAssignedApp(user).then(function(response) {
+                for (var i = 0, j = response.apps.length; i < j; i++) {
+                    _self.userObject.apps.push(response.apps[i].app_id);
+                }
             }).catch(function(error) {
                 alert('warning', 'Oops!', 'Couldn\'t register');
             });

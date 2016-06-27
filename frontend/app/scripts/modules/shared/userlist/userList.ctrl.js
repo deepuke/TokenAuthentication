@@ -25,7 +25,6 @@
         }
 
         function changeUserState(user) {
-            debugger;
             if (user.active === true) {
                 user.active = 1
             } else {

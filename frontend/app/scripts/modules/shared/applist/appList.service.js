@@ -17,12 +17,23 @@
 
         return {
             getAllApps: getAllApps,
+            getApps: getApps,
             changeAppState: changeAppState
         };
 
         function changeAppState(app) {
             var deferred = $q.defer();
             $http.put(API_URL + 'changeAppState/', app).success(function(response) {
+                deferred.resolve(response);
+            }).error(function(error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        }
+
+        function getApps(user) {
+            var deferred = $q.defer();
+            $http.get(API_URL + 'getApps/', user).success(function(response) {
                 deferred.resolve(response);
             }).error(function(error) {
                 deferred.reject(error);

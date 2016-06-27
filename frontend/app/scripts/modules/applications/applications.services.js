@@ -16,8 +16,9 @@
 
         return {
             addApplication: addApplication,
-            // getAllApps: getAllApps,
-            getApps: getApps
+            getAppByAppID: getAppByAppID,
+            getApps: getApps,
+            updateApplication : updateApplication
         };
 
         function addApplication(application) {
@@ -30,15 +31,25 @@
             return deferred.promise;
         }
 
-        // function getAllApps(user) {
-        //     var deferred = $q.defer();
-        //     $http.post(API_URL + 'getAllApps/', user).success(function(response) {
-        //         deferred.resolve(response);
-        //     }).error(function(error) {
-        //         deferred.reject(error);
-        //     });
-        //     return deferred.promise;
-        // }
+        function updateApplication(application) {
+            var deferred = $q.defer();
+            $http.put(API_URL + 'updateApplication/', application).success(function(response) {
+                deferred.resolve(response);
+            }).error(function(error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        }
+
+        function getAppByAppID(application) {
+            var deferred = $q.defer();
+            $http.post(API_URL + 'getAppByAppID/', application).success(function(response) {
+                deferred.resolve(response);
+            }).error(function(error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        }
 
         function getApps(user) {
             var deferred = $q.defer();

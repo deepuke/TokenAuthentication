@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     /**
@@ -9,21 +9,30 @@
      * Service in the angularNodeTokenAuthApp.
      */
     angular.module('angularNodeTokenAuthApp')
-    .factory('updateUserAppApiService', updateUserAppApiService);
+        .factory('updateUserAppApiService', updateUserAppApiService);
 
     updateUserAppApiService.$inject = ['$q', '$http', 'API_URL'];
 
     function updateUserAppApiService($q, $http, API_URL) {
 
         return {
-            updateUserApp : updateUserApp
+            updateUserApp: updateUserApp,
+            getAllActiveApps: getAllActiveApps
         };
 
-        function updateUserApp(user){
-            debugger;
-
+        function getAllActiveApps(){
             var deferred = $q.defer();
-            $http.put(API_URL +'updateUserApps/', user).success(function(response) {
+            $http.get(API_URL + 'getAllActiveApps/').success(function(response) {
+                deferred.resolve(response);
+            }).error(function(error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        }
+
+        function updateUserApp(user) {
+            var deferred = $q.defer();
+            $http.put(API_URL + 'updateUserApps/', user).success(function(response) {
                 deferred.resolve(response);
             }).error(function(error) {
                 deferred.reject(error);

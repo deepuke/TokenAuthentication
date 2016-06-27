@@ -10,5 +10,5 @@
      *
      * Main module of the application.
      */
-    angular.module('angularNodeTokenAuthApp', ['ui.router', 'ngCookies', 'satellizer', 'ui.bootstrap']);
+    angular.module('angularNodeTokenAuthApp', ['ui.router', 'ngCookies', 'ngTable', 'satellizer', 'ui.bootstrap']);
 }());

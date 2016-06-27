@@ -46,7 +46,10 @@
             url: '/applications',
             templateUrl: '/scripts/modules/applications/applications.html',
             controller: 'applicationsCtrl',
-            controllerAs: 'ctrl'
+            controllerAs: 'ctrl',
+            params: {
+                app_id: null
+            }
         }).state('admin.roles', {
             url: '/roles',
             templateUrl: '/scripts/modules/roles/roles.html',

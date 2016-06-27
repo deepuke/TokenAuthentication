@@ -28,6 +28,71 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
         });
     });
 
+    router.post("/getAppByAppID", function(req, res) {
+        var application = req.body;
+        var query = 'SELECT * FROM application WHERE application.app_id=' + application.app_id + '';
+        var table = ["application"];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else {
+                res.json({
+                    "Error": false,
+                    "Message": "Success",
+                    "apps": rows
+                });
+            }
+        });
+    });
+
+    router.get("/getAllActiveApps", function(req, res) {
+        var query = 'SELECT * FROM application WHERE application.active=1';
+        var table = ["application"];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else {
+                res.json({
+                    "Error": false,
+                    "Message": "Success",
+                    "apps": rows
+                });
+            }
+        });
+    });
+
+    router.post("/getAssignedApp", function(req, res) {
+        var user = req.body;
+        var query = 'SELECT application_user.app_id FROM n4msaas.application_user WHERE application_user.user_id IN(SELECT user.user_id from n4msaas.user where user.username ="' + user.username + '")';
+        var table = ["application"];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else {
+                res.json({
+                    "Error": false,
+                    "Message": "Success",
+                    "apps": rows
+                });
+            }
+        });
+    });
+
     router.post("/getAllApps", function(req, res) {
         var user = req.body;
         if (user.user_id) {
@@ -62,7 +127,30 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
     router.put("/changeAppState", function(req, res) {
         var app = req.body;
         console.log(app);
-        var query = 'UPDATE n4msaas.application SET active='+app.active+' WHERE app_id='+app.app_id+'';
+        var query = 'UPDATE n4msaas.application SET active=' + app.active + ' WHERE app_id=' + app.app_id + '';
+        var table = ["application"];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else {
+                res.json({
+                    "Error": false,
+                    "Message": "Success",
+                    "Users": rows[0]
+                });
+            }
+        });
+    });
+
+    router.put("/updateApplication", function(req, res) {
+        var app = req.body;
+        console.log(app);
+        var query = 'UPDATE n4msaas.application SET app_name="'+app.app_name+'" WHERE app_id=' + app.app_id + '';
         var table = ["application"];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
