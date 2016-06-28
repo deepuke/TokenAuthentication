@@ -21,6 +21,9 @@
 					<td>{{user.companyname}}</td>
 					<td ng-if="ctrl.isAdmin()">
 						<input ng-hide="user.username == 'admin'" type="checkbox" ng-model="user.active" ng-change="ctrl.changeUserState(user)">
+						<span>
+							<a title="Edit" class="cursor-pointer" ng-click="ctrl.modify(app.app_id)"><i class="glyphicon glyphicon-edit" aria-hidden="true" /></a>
+						</span>
 					</td>
 				</tr>
 			</tbody>
