@@ -17,9 +17,20 @@
 
         return {
             getAllRoles: getAllRoles,
-            addNewRoles: addNewRoles
+            addNewRoles: addNewRoles,
+            getRoleByRoleID: getRoleByRoleID,
+            updateRole: updateRole
         };
 
+        function getRoleByRoleID(role) {
+            var deferred = $q.defer();
+            $http.post(API_URL + 'getRoleByRoleID/', role).success(function(response) {
+                deferred.resolve(response);
+            }).error(function(error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        }
 
         function getAllRoles() {
             var deferred = $q.defer();
@@ -42,6 +53,16 @@
                 deferred.reject(error);
             });
 
+            return deferred.promise;
+        }
+
+        function updateRole(role) {
+            var deferred = $q.defer();
+            $http.put(API_URL + 'updateRole/', role).success(function(response) {
+                deferred.resolve(response);
+            }).error(function(error) {
+                deferred.reject(error);
+            });
             return deferred.promise;
         }
     }

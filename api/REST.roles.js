@@ -12,6 +12,28 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
         });
     });
 
+    router.post("/getRoleByRoleID", function(req, res) {
+        var role = req.body;
+        var query = 'SELECT * FROM role WHERE role.role_id=' + role.role_id + '';
+        var table = ["role"];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else {
+                res.json({
+                    "Error": false,
+                    "Message": "Success",
+                    "roles": rows
+                });
+            }
+        });
+    });
+
     router.get("/getAllRoles", function(req, res) {
         var query = 'SELECT * FROM role';
         var table = ["role"];
@@ -58,6 +80,29 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection) {
         var role = req.body;
         console.log(role);
         var query = 'UPDATE n4msaas.role SET active='+role.active+' WHERE role_id='+role.role_id+'';
+        var table = ["role"];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else {
+                res.json({
+                    "Error": false,
+                    "Message": "Success",
+                    "Users": rows[0]
+                });
+            }
+        });
+    });
+
+    router.put("/updateRole", function(req, res) {
+        var role = req.body;
+        console.log(role);
+        var query = 'UPDATE n4msaas.role SET role_name="'+role.role_name+'" WHERE role_id=' + role.role_id + '';
         var table = ["role"];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {

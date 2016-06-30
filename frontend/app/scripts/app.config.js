@@ -54,7 +54,10 @@
             url: '/roles',
             templateUrl: '/scripts/modules/roles/roles.html',
             controller: 'rolesCtrl',
-            controllerAs: 'ctrl'
+            controllerAs: 'ctrl',
+            params: {
+                role_id: null
+            }
         }).state('appDetails', {
             url: '/appDetails',
             templateUrl: '/scripts/modules/shared/applist/appDetails.html',

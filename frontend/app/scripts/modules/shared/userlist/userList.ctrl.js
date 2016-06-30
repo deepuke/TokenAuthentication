@@ -2,9 +2,13 @@
     'use strict';
 
     angular.module('angularNodeTokenAuthApp').controller('userListCtrl', userListController);
-    userListController.$inject = ['$scope', '$log', '$rootScope', 'alert', '$http', '$state', '$stateParams', 'userListApiService', 'authToken'];
+    userListController.$inject = [
+        '$scope', '$log', '$rootScope', 'alert', '$http', '$state',
+        '$stateParams', 'userListApiService', 'authToken',
+        '$uibModal'
+    ];
 
-    function userListController($scope, $log, $rootScope, alert, $http, $state, $stateParams, userListApiService, authToken) {
+    function userListController($scope, $log, $rootScope, alert, $http, $state, $stateParams, userListApiService, authToken, $uibModal) {
 
         console.log('userList controller loaded');
         var _self = this;
@@ -13,9 +17,13 @@
         this.currentUser = {};
         this.updateUser = updateUser;
         this.changeUserState = changeUserState;
+        this.modify = modify;
 
         _self.isAuthenticated = authToken.isAuthenticated;
         _self.isAdmin = authToken.isAdmin;
+
+        /*ng-table test */
+        /**/
 
         init();
 
@@ -59,6 +67,12 @@
                 username: username
             });
         }
+
+        function modify(user){
+            console.log(user);
+        }
+
+
     }
 
 })();

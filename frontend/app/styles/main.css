@@ -13,6 +13,9 @@ body {
 .top-buffer-20{
     padding: 20px 0 0 0;
 }
+.ng-table th {
+    text-align: left;
+}
 /* Everything but the jumbotron gets side spacing for mobile first views */
 
 .header,

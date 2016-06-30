@@ -15,20 +15,31 @@
         init();
 
         function init() {
-            getAllUsers();
+            console.log('Modal popup initialized.');
         }
 
-        function getAllUsers() {
-            userApiService.getAllUsers().then(function(response) {
-                _self.users = response.Users;
-            }).catch(function(error) {
-                alert('warning', 'Oops!', 'Couldn\'t register');
-            })
-        }
+        _self.open = function(size) {
 
-        function updateUser(email_id){
-            console.log(email_id);
-        }
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'scripts/modules/shared/modalPopup/modalPopup.html',
+                controller: 'modalPopupCtrl',
+                size: size ? size : 'sm',
+                resolve: {
+                    items: function() {
+                        return $scope.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(selectedItem) {
+                $scope.selected = selectedItem;
+            }, function() {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+
     }
 
 })();

@@ -266,9 +266,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
     }
 
-
-
-
     router.post("/getAllusers", function(req, res) {
         var user = req.body;
         var token = req.headers.authorization.split(' ')[1];
@@ -281,7 +278,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 "Users": []
             });
         } else {
-            var query = 'SELECT user.username, user.email_id, user.companyname, user.active FROM user ';
+            var query = 'SELECT user.username, user.email_id, user.companyname, user.address, user.zipcode, user.active FROM user ';
             var table = ["user"];
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {

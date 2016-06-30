@@ -10,6 +10,8 @@
         var _self = this;
         this.roles = [];
         this.changeRoleState = changeRoleState;
+        this.modify = modify;
+
         _self.isAuthenticated = authToken.isAuthenticated;
         _self.isAdmin = authToken.isAdmin;
 
@@ -39,6 +41,12 @@
                 init();
             }).catch(function(error) {
                 alert('warning', 'Oops!', 'Couldn\'t register');
+            });
+        }
+
+        function modify(role_id) {
+            $state.go('admin.roles', {
+                role_id: role_id
             });
         }
 

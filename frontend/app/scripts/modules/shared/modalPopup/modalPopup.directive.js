@@ -9,7 +9,9 @@
         var directive = {
             restrict: 'EA',
             templateUrl: 'scripts/modules/shared/modalPopup/modalPopup.html',
-            scope: {},
+            scope: {
+                user : '='
+            },
             controller: 'modalPopupCtrl',
             controllerAs: 'ctrl',
             bindToController: true
