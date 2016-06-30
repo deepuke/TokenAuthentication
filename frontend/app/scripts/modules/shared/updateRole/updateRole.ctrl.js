@@ -15,7 +15,7 @@
         this.data = {
             singleSelect: null,
             multipleSelect: [],
-            roles : []
+            roles: []
         };
 
         init();
@@ -26,23 +26,26 @@
 
         function getAllRoles() {
             rolesApiService.getAllRoles().then(function(response) {
-                _self.data.roles = response.roles;
+                for (var i = 0, j = response.roles.length; i < j; i++) {
+                    if (response.roles[i].active) {
+                        _self.data.roles.push(response.roles[i]);
+                    }
+                }
+                //_self.data.roles = response.roles;
             }).catch(function(error) {
                 console.log(error);
             });
         }
 
         function updateUserRole() {
-            // console.log(_self.user);
-            // console.log(_self.data.multipleSelect);
             var updatedUser = {
-                user_id : _self.user.user_id,
-                role_ids : _self.data.multipleSelect
+                user_id: _self.user.user_id,
+                role_ids: _self.data.multipleSelect
             };
-            updateUserRoleApiService.updateUserRole(updatedUser).then(function(response){
+            updateUserRoleApiService.updateUserRole(updatedUser).then(function(response) {
                 console.log(response);
                 $state.go('admin.config');
-            }).catch(function(err){
+            }).catch(function(err) {
 
             });
         }
