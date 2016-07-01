@@ -9,13 +9,19 @@
 				<tr class="info">
 					<th ng-if="ctrl.isAdmin()">Id</th>
 					<th>Applications Name</th>
+					<!-- <th>Applications URL</th> -->
 					<th ng-if="ctrl.isAdmin() && ctrl.edit">Active</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="app in ctrl.apps | orderBy : 'app_id'">
 					<td ng-if="ctrl.isAdmin()">{{app.app_id}}</td>
-					<td><a class="cursor-pointer" ng-click="ctrl.gotoApp(app.app_id)">{{app.app_name}}</a> <i class="small" ng-show="!app.active">App is Inactivated</i></td>
+					<td>
+						<a ng-show="app.active" href="{{app.app_url}}" target="_blank" class="cursor-pointer">{{app.app_name}}</a>
+						<span ng-show="!app.active">{{app.app_name}}</span>
+						<span class="label label-warning" ng-show="!app.active">App is Deactivated!</span>
+					</td>
+					<!-- <td>{{app.app_url}}</td> -->
 					<td ng-if="ctrl.isAdmin() && ctrl.edit">
 						<span>
 							<input type="checkbox" ng-model="app.active" ng-change="ctrl.changeAppState(app)">
