@@ -1,0 +1,15 @@
+<h2>Login</h2>
+<form class="form-signin" name="register" ng-submit="ctrl.submit()">
+    <div class="form-group has-warning">
+
+        <h3 class="form-signin-heading text-muted"> <small>Enter Details</small></h3>
+
+        <input type="text" class="form-control" ng-model="ctrl.username" placeholder="User Name" required="" autofocus="">
+        <input type="password" name="password" ng-model="ctrl.password" class="form-control" placeholder="Password" required="" >
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            Sign In
+        </button>
+    </div>
+</form>
+
+<a ui-sref="forgotPassword">Forgot Username/Password</a>

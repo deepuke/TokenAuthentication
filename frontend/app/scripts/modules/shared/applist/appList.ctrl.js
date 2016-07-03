@@ -20,7 +20,12 @@
 
         function init() {
             var loggedUser = authToken.getLoggedUser();
-            getApps(loggedUser);
+            if(_self.permission){
+                getApps(loggedUser);
+            } else {
+                getAllApps(loggedUser);
+            }
+
         }
 
         function getApps(user) {
@@ -35,7 +40,20 @@
             });
         }
 
-        function modify(app_id){            
+        function getAllApps(user) {
+            appListApiService.getAllApps(user).then(function(response) {
+                _self.apps = response.apps;
+                for (var i = 0, j = _self.apps.length; i < j; i++) {
+                    _self.apps[i].active = !!_self.apps[i].active;
+                }
+
+            }).catch(function(error) {
+                alert('warning', 'Oops!', error);
+            });
+        }
+
+
+        function modify(app_id){
             $state.go('admin.applications', {app_id : app_id});
         }
 

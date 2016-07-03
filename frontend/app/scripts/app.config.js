@@ -19,17 +19,22 @@
             controllerAs: 'ctrl'
         }).state('register', {
             url: '/register',
-            templateUrl: 'scripts/modules/users/register.html',
+            templateUrl: 'scripts/modules/users/register/register.html',
             controller: 'RegisterCtrl',
             controllerAs: 'ctrl'
         }).state('login', {
             url: '/login',
-            templateUrl: '/scripts/modules/users/login.html',
+            templateUrl: '/scripts/modules/users/login/login.html',
             controller: 'LoginCtrl',
             controllerAs: 'ctrl'
         }).state('logout', {
             url: '/logout',
             controller: 'LogoutCtrl',
+            controllerAs: 'ctrl'
+        }).state('forgotPassword', {
+            url: '/forgotPassword',
+            templateUrl: '/scripts/modules/users/forgotPassword/forgotPassword.html',
+            controller: 'forgotPasswordCtrl',
             controllerAs: 'ctrl'
         })
 

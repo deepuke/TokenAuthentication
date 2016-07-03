@@ -54,7 +54,7 @@ REST.prototype.configureExpress = function(connection) {
 	self.startServer();
 };
 
-REST.prototype.startServer = function() {	
+REST.prototype.startServer = function() {
 	app.listen(6050, function() {
 		console.log("All right ! I am alive at Port 6050.");
 	});

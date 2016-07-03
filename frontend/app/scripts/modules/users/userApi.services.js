@@ -20,8 +20,19 @@
 				login : login,
 				getAllUsers : getAllUsers,
 				updateUser : updateUser,
-				getuserByEmail : getuserByEmail
+				getuserByEmail : getuserByEmail,
+				sendEmail : sendEmail
 			};
+
+			function sendEmail(user) {
+				var deferred = $q.defer();
+				$http.post(API_URL + 'sendEmail/', user).success(function(response) {
+					deferred.resolve(response);
+				}).error(function(error) {
+					deferred.reject(error);
+				});
+				return deferred.promise;
+			}
 
 			function updateUser(user) {
 				var deferred = $q.defer();
@@ -36,42 +47,30 @@
 			function getUser(user) {
 				var deferred = $q.defer();
 				$http.post(API_URL + 'getusers/', user).success(function(response) {
-
 					deferred.resolve(response);
-
 				}).error(function(error) {
 					deferred.reject(error);
-
 				});
-
 				return deferred.promise;
 			}
 
 			function getuserByEmail(user) {
 				var deferred = $q.defer();
 				$http.post(API_URL + 'getuserByEmail/', user).success(function(response) {
-
 					deferred.resolve(response);
-
 				}).error(function(error) {
 					deferred.reject(error);
-
 				});
-
 				return deferred.promise;
 			}
 
 			function getAllUsers(user) {
 				var deferred = $q.defer();
 				$http.post(API_URL + 'getusers/', user).success(function(response) {
-
 					deferred.resolve(response);
-
 				}).error(function(error) {
 					deferred.reject(error);
-
 				});
-
 				return deferred.promise;
 			}
 
@@ -79,11 +78,9 @@
 				var deferred = $q.defer();
 				$http.post(API_URL + 'user/', user).success(function(response) {
 					deferred.resolve(response);
-
 				}).error(function(error) {
 					deferred.reject(error);
 				});
-
 				return deferred.promise;
 			}
 
@@ -91,12 +88,9 @@
 				var deferred = $q.defer();
 				$http.post(API_URL + 'login/', user).success(function(response) {
 					deferred.resolve(response);
-
 				}).error(function(error) {
 					deferred.reject(error);
-
 				});
-
 				return deferred.promise;
 			}
 

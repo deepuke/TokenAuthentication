@@ -2,6 +2,10 @@ var jwt = require('jwt-simple');
 var mysql = require('mysql');
 var createSendToken = require('./services/jwt.js');
 var checkLoggedUser = require('./services/user.services.js');
+
+var nodemailer = require('nodemailer');
+var sgTransport = require('nodemailer-sendgrid-transport');
+
 var ROLE_ID = 5;
 var DEFAULT_APP_ID = 2;
 var ADMIN_ROLE_ID = 1;
@@ -13,6 +17,58 @@ function REST_ROUTER(router, connection, md5) {
 }
 
 REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
+
+    router.post('/sendEmail', function(req, res) {
+        var user = req.body;
+        var verificationCode = Math.floor((Math.random() * 1000000) + 1);
+        var options = {
+            service: 'hotmail',
+            auth: {
+                user: 'deepuke1984@live.com',
+                pass: 'Poiuyt123#'
+            }
+        };
+        var transporter = nodemailer.createTransport('SMTP', options);
+
+        var mailOptions = {
+            from: 'deepuke1984@live.com',
+            to: user.email_id,
+            subject: 'hello world!',
+            text: 'Verificaton Key : ' + verificationCode,
+        };
+
+        transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                console.log(error);
+                res.json({
+                    Message: 'error'
+                });
+            } else {
+                var query = 'INSERT INTO `n4msaas`.`pre_register` (`email_id`, `verification_code`) VALUES ("' + user.email_id + '", ' +
+                    verificationCode + ')';
+                var table = ["pre_register"];
+                query = mysql.format(query, table);
+                connection.query(query, function(err, rows) {
+                    if (err) {
+                        console.log(err);
+                        res.json({
+                            "Error": true,
+                            "Message": "Error executing MySQL query"
+                        });
+                    } else {
+                        res.json({
+                            "Error": false,
+                            "Message": "Success",
+                            "Users": rows,
+                        });
+                    }
+                });
+                // res.json({
+                //     Message: info.response
+                // });
+            }
+        });
+    });
 
     router.post("/getusers", function(req, res) {
         var user = req.body;
@@ -53,7 +109,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Message": "Error executing MySQL query"
                 });
             } else {
-                //console.log(rows);
                 var item = {
                     role_ids: [],
                     user: rows[0]
@@ -117,8 +172,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
     router.post("/changeUserState", function(req, res) {
         var user = req.body;
-        console.log(user);
-        var query = 'UPDATE n4msaas.user SET active='+user.active+' WHERE username="' + user.username + '"';
+        var query = 'UPDATE n4msaas.user SET active=' + user.active + ' WHERE username="' + user.username + '"';
         var table = ["user"];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
@@ -176,8 +230,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Message": "Error executing MySQL query"
                 });
             } else {
-                console.log(rows);
-                if(!rows.length){
+                if (!rows.length) {
                     res.json({
                         "Error": false,
                         "Message": "Check your credential, Or user might not be active please try again Or contact administrator.",
@@ -191,7 +244,47 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
-    router.post('/user', saveUserData, getUserIdByUserName, setDefaultRoleForUser, setDefaultAppForUser);
+    router.post('/changePassword', validateVerificationCode, updatePassword);
+
+    function updatePassword(req, res, next) {
+        var user = req.body;
+        var query = 'UPDATE n4msaas.user SET password="' + md5(user.password) + '" WHERE email_id="' + user.email_id + '"';
+        var table = ["user"];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query, User is not created."
+                });
+            } else {
+                res.json({
+                    "Error": true,
+                    "Message": "User password updated."
+                });
+            }
+        });
+    }
+
+    function validateVerificationCode(req, res, next) {
+        var user = req.body;
+        var query = 'DELETE FROM `n4msaas`.`pre_register` WHERE `email_id`="' + user.email_id + '" and `verification_code` = ' + user.verification_code + '';
+        var table = ["pre_register"];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query, User is not created."
+                });
+            } else {
+                next();
+            }
+        });
+    }
+    router.post('/user', validateVerificationCode, saveUserData, getUserIdByUserName, setDefaultRoleForUser, setDefaultAppForUser);
 
     function saveUserData(req, res, next) {
         var user = req.body;
