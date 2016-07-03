@@ -24,8 +24,8 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var options = {
             service: 'hotmail',
             auth: {
-                user: 'deepuke1984@live.com',
-                pass: 'Poiuyt123#'
+                user: '', //any hotmail ID
+                pass: '' // its password
             }
         };
         var transporter = nodemailer.createTransport('SMTP', options);
