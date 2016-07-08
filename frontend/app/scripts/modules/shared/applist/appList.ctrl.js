@@ -4,9 +4,9 @@
     angular
         .module('angularNodeTokenAuthApp')
         .controller('appListCtrl', appListController);
-    appListController.$inject = ['$scope', '$log', '$rootScope', 'alert', '$http', '$state', 'appListApiService', 'authToken'];
+    appListController.$inject = ['$scope', '$window', '$log', '$rootScope', 'alert', '$http', '$state', 'appListApiService', 'authToken'];
 
-    function appListController($scope, $log, $rootScope, alert, $http, $state, appListApiService, authToken) {
+    function appListController($scope, $window, $log, $rootScope, alert, $http, $state, appListApiService, authToken) {
         var _self = this;
 
         this.apps = [];
@@ -35,6 +35,10 @@
                     _self.apps[i].active = !!_self.apps[i].active;
                 }
 
+                if(_self.apps.length === 1){
+                    $window.open(_self.apps[0].app_url, '_blank');
+                }
+
             }).catch(function(error) {
                 alert('warning', 'Oops!', error);
             });
@@ -45,6 +49,10 @@
                 _self.apps = response.apps;
                 for (var i = 0, j = _self.apps.length; i < j; i++) {
                     _self.apps[i].active = !!_self.apps[i].active;
+                }
+
+                if(_self.apps.length === 1){
+                    $window.open(_self.apps[0].app_url, '_blank');
                 }
 
             }).catch(function(error) {
